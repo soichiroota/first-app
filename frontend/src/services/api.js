@@ -19,13 +19,9 @@ api.interceptors.request.use(function (config) {
   // メッセージをクリア
   store.dispatch('message/clearMessages')
   // 認証用トークンがあればリクエストヘッダに乗せる
-  const token = localStorage.getItem('access')
-  /* if (token) {
-    config.headers.Authorization = 'JWT ' + token
-    return config
-  } */
+  const token = Cookies.get('csrftoken')
   if (token) {
-    config.headers.Authorization = token
+    config.headers['X-CSRFToken'] = token
     return config
   }
   return config
